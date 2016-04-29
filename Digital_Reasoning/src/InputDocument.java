@@ -23,12 +23,17 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 
 
-public class InputDocument {
-
+class Sentence {
 	ArrayList<String> wordsArray = new ArrayList<String>();
 	ArrayList<String> punctuationArray = new ArrayList<String>();
+	ArrayList<String> tokensArray = new ArrayList<String>();
+}
+
+public class InputDocument {
+
+	ArrayList<Sentence> sentences = new ArrayList<Sentence>();
 	ArrayList<String> sentenceArray = new ArrayList<String>(); 
-	ArrayList<String> nounsArray= new ArrayList<String>();
+	
 	
 	int sentenceIndex=0;
 	
@@ -36,7 +41,7 @@ public class InputDocument {
     String regexPunctuation = "\\W"; 
     
     HashSet<String> nouns;
-    
+    String fileName;
     public InputDocument(HashSet<String> nouns, String fileName) throws IOException, ParserConfigurationException, TransformerException
     {
     	this.nouns = nouns;
@@ -50,7 +55,7 @@ public class InputDocument {
 			content= content+sCurrentLine;
 		}
 		br.close();
-		
+		this.fileName = fileName;
 		convertDocumentToSentences(content, fileName);
     }
 	
@@ -83,23 +88,18 @@ public class InputDocument {
 		convertSentenceIntoWordsAndPunctuation(sentenceArray, fileName);
 	}
 	
+	
 	public void convertSentenceIntoWordsAndPunctuation(ArrayList<String> sentenceArray, String fileName) throws ParserConfigurationException, IOException, TransformerException
 	{	
-		ArrayList<String> tokensArray = new ArrayList<String>();
+		
 		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
 		
-		DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-		Document document = documentBuilder.newDocument();
-		Element rootElement = document.createElement("inputFile");
-		document.appendChild(rootElement);
-		Attr attr = document.createAttribute("name");
-        attr.setValue(fileName);
-        rootElement.setAttributeNode(attr);
+		
 		//FileWriter fileWritter = new FileWriter(file.getName(),true);
 		for(String sentence : sentenceArray)
 		{		
-				
+			Sentence s = new Sentence();
+			sentences.add(s);
 			    int start = 0;
 				Matcher matcher = Pattern.compile(regexPunctuation).matcher(sentence);
 				
@@ -110,32 +110,54 @@ public class InputDocument {
 					if(p.matcher(newWord.trim()).find())
 						{
 						if(newWord.trim().matches("[a-zA-Z0-9]+.")) {
-							wordsArray.add(newWord.substring(0, newWord.length()-1));
-						 	tokensArray.add(newWord.substring(0, newWord.length()-1));
+							s.wordsArray.add(newWord.substring(0, newWord.length()-1));
+						 	s.tokensArray.add(newWord.substring(0, newWord.length()-1));
 						}
-						 punctuationArray.add(newWord.substring(newWord.length()-1));
-						 tokensArray.add(newWord.substring(newWord.length()-1));
+						 s.punctuationArray.add(newWord.substring(newWord.length()-1));
+						 s.tokensArray.add(newWord.substring(newWord.length()-1));
 						}
 					else if(newWord.trim().matches("[a-zA-Z0-9]+"))
 						{
-						 wordsArray.add(newWord.trim());
-						 tokensArray.add(newWord.trim());
+						 s.wordsArray.add(newWord.trim());
+						 s.tokensArray.add(newWord.trim());
 						}
 					start = matcher.end();
 					
 				}		    
 				//xml
 				//System.out.println(tokensArray);
+				/*DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+				Document document = documentBuilder.newDocument();
+				Element rootElement = document.createElement("inputFile");
+				document.appendChild(rootElement);
+				Attr attr = document.createAttribute("name");
+		        attr.setValue(fileName);
+		        rootElement.setAttributeNode(attr);
 				Element sentenceElement = document.createElement("sentence");
 				rootElement.appendChild(sentenceElement);
-				convertIntoXmlFile(tokensArray, document, sentenceElement);
-				tokensArray.clear();
+				for (String token : tokensArray)
+				{ //loop through SentenceItems
+					if (wordsArray.contains(token)) { // add Words
+						String eleName = (nouns.contains(token))?"name":"word";
+						Element wordElement = document.createElement(eleName);
+						wordElement.appendChild(document.createTextNode(token));
+						sentenceElement.appendChild(wordElement);
+					}
+					else if (punctuationArray.contains(token)) { // add Punctuations
+					
+						Element punctuationElement = document.createElement("punctuation");
+						punctuationElement.appendChild(document.createTextNode(token));
+						sentenceElement.appendChild(punctuationElement);
+					}
+				}*/
+				//tokensArray.clear();
 		}
 	}
 	
-	private void convertIntoXmlFile(ArrayList<String> tokenizedSentence, Document document, Element sentenceElement) throws ParserConfigurationException, IOException, TransformerException 
+	/*private void convertIntoXmlFile(ArrayList<String> tokensArray, Document document, Element sentenceElement) throws ParserConfigurationException, IOException, TransformerException 
 	{
-					for (String token : tokenizedSentence)
+					for (String token : tokensArray)
 					{ //loop through SentenceItems
 						if (wordsArray.contains(token)) { // add Words
 							String eleName = (nouns.contains(token))?"name":"word";
@@ -170,6 +192,6 @@ public class InputDocument {
 		File file = new File("./outputTask1.xml");
 	    StreamResult result = new StreamResult(file);        
 	    transformer.transform(source, result);
-	}
+	}*/
 	
 }
