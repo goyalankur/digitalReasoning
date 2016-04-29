@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<inputFile name="/home/ankur/workspace/Digital_Reasoning/NLP_test/nlp_data.txt">
+<inputFile name="./NLP_test/nlp_data.txt">
     <sentence>
         <word>The</word>
         <word>term</word>
@@ -19,8 +19,8 @@
         <word>the</word>
         <word>German</word>
         <word>philosopher</word>
-        <word>Ernst</word>
-        <word>Haeckel</word>
+        <name>Ernst</name>
+        <name>Haeckel</name>
         <punctuation>,</punctuation>
         <word>who</word>
         <word>claimed</word>
@@ -35,7 +35,7 @@
         <word>course</word>
         <word>and</word>
         <word>character</word>
-        <word>of</word>
+        <name>of</name>
         <word>the</word>
         <word>feared</word>
         <punctuation>'</punctuation>
@@ -55,7 +55,7 @@
         <word>the</word>
         <word>full</word>
         <word>sense</word>
-        <word>of</word>
+        <name>of</name>
         <word>the</word>
         <word>word</word>
         <punctuation>.</punctuation>
@@ -81,18 +81,18 @@
         <word>June</word>
         <word>1914</word>
         <word>assassination</word>
-        <word>of</word>
+        <name>of</name>
         <word>Archduke</word>
-        <word>Franz</word>
-        <word>Ferdinand</word>
-        <word>of</word>
+        <name>Franz</name>
+        <name>Ferdinand</name>
+        <name>of</name>
         <word>Austria</word>
         <punctuation>,</punctuation>
         <word>heir</word>
         <word>to</word>
         <word>the</word>
         <word>throne</word>
-        <word>of</word>
+        <name>of</name>
         <word>Austria</word>
         <punctuation>-</punctuation>
         <word>Hungary</word>
@@ -100,8 +100,8 @@
         <word>by</word>
         <word>Yugoslav</word>
         <word>nationalist</word>
-        <word>Gavrilo</word>
-        <word>Princip</word>
+        <name>Gavrilo</name>
+        <name>Princip</name>
         <punctuation>(</punctuation>
         <word>19</word>
         <word>years</word>
@@ -111,7 +111,7 @@
         <word>time</word>
         <punctuation>)</punctuation>
         <word>in</word>
-        <word>Sarajevo</word>
+        <name>Sarajevo</name>
         <punctuation>.</punctuation>
     </sentence>
     <sentence>
@@ -131,8 +131,8 @@
         <word>to</word>
         <word>the</word>
         <word>Kingdom</word>
-        <word>of</word>
-        <word>Serbia</word>
+        <name>of</name>
+        <name>Serbia</name>
         <punctuation>,</punctuation>
         <word>and</word>
         <word>entangled</word>

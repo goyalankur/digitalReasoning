@@ -1,12 +1,10 @@
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,17 +28,19 @@ public class InputDocument {
 	ArrayList<String> wordsArray = new ArrayList<String>();
 	ArrayList<String> punctuationArray = new ArrayList<String>();
 	ArrayList<String> sentenceArray = new ArrayList<String>(); 
+	ArrayList<String> nounsArray= new ArrayList<String>();
 	
 	int sentenceIndex=0;
 	
 	String regexSentenceIdentifier="[.?!]";
     String regexPunctuation = "\\W"; 
     
-    public InputDocument(String fileName) throws IOException, ParserConfigurationException, TransformerException
+    HashSet<String> nouns;
+    
+    public InputDocument(HashSet<String> nouns, String fileName) throws IOException, ParserConfigurationException, TransformerException
     {
+    	this.nouns = nouns;
     	BufferedReader br = null;
-
-
 		String sCurrentLine;
 		String content = "";
 
@@ -125,7 +125,7 @@ public class InputDocument {
 					
 				}		    
 				//xml
-				System.out.println(tokensArray);
+				//System.out.println(tokensArray);
 				Element sentenceElement = document.createElement("sentence");
 				rootElement.appendChild(sentenceElement);
 				convertIntoXmlFile(tokensArray, document, sentenceElement);
@@ -138,8 +138,8 @@ public class InputDocument {
 					for (String token : tokenizedSentence)
 					{ //loop through SentenceItems
 						if (wordsArray.contains(token)) { // add Words
-					
-							Element wordElement = document.createElement("word");
+							String eleName = (nouns.contains(token))?"name":"word";
+							Element wordElement = document.createElement(eleName);
 							wordElement.appendChild(document.createTextNode(token));
 							sentenceElement.appendChild(wordElement);
 						}
@@ -149,7 +149,6 @@ public class InputDocument {
 							punctuationElement.appendChild(document.createTextNode(token));
 							sentenceElement.appendChild(punctuationElement);
 						}
-						
 					}
 					printDocument(document, System.out);
 					
@@ -168,7 +167,7 @@ public class InputDocument {
 	    //transformer.transform(source, 
 	      //   new StreamResult(new OutputStreamWriter(out, "UTF-8")));
 	    
-		File file = new File("/home/ankur/workspace/Digital_Reasoning/outputTask1.xml");
+		File file = new File("./outputTask1.xml");
 	    StreamResult result = new StreamResult(file);        
 	    transformer.transform(source, result);
 	}
