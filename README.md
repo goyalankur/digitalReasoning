@@ -7,4 +7,13 @@ This    project    should    be    well    tested    and    code    should    be
 2. Modify    your    program    from    #1    to    add    rudimentary    recognition    of    proper    nouns    (“named   
 entities”)    in    the    input,    and    print    a    list    of    recognized    named    entities    when    it    runs.    The    list   of    named    entities    is    in    the    file    “   NER.txt   ”.    Enhance   your    data    structures    and    output   schema  to  store  information  about  which  portions  of  the  text  represent  named  entities.  
   
-3. Modify    your    program    from    #2    to    use    “   nlp_data.zip   ”    as    its    input.    Use    a    thread pool    to   parallelize    the    processing    of    the    text    files    contained    in    the    zip.    Aggregate   the    results   and  modify  the  output  schema  accordingly. 
+3. Modify    your    program    from    #2    to    use    “   nlp_data.zip   ”    as    its    input.    Use    a    thread pool    to   parallelize    the    processing    of    the    text    files    contained    in    the    zip.    Aggregate   the    results   and  modify  the  output  schema  accordingly.
+
+#Assumption
+Currently in this approach, I am not handling decimal numbers.
+
+#Other possible approach:
+
+In this exercise, I could make different classes of each type of information (word, punctuation, sentences), which would make it more object oriented but the drawback of this approach is less efficent execution.
+
+
